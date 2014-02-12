@@ -5,18 +5,14 @@ import java.util.Vector;
  */
 public class TennisScore {
 
-    public int player1SetScore;
-    public int player2SetScore;
-    public int player1GameScore;
-    public int player2GameScore;
-
     Vector<Integer> score;
 
     public TennisScore(int player1SetScore, int player2SetScore, int player1GameScore, int player2GameScore) {
-        this.player1SetScore = player1SetScore;
-        this.player2SetScore = player2SetScore;
-        this.player1GameScore = player1GameScore;
-        this.player2GameScore = player2GameScore;
+        score = new Vector<Integer>(4);
+        score.add(0,new Integer(player1SetScore));
+        score.add(1,new Integer(player2SetScore));
+        score.add(2,new Integer(player1GameScore));
+        score.add(3,new Integer(player2GameScore));
     }
 
     public TennisScore() {
@@ -27,13 +23,8 @@ public class TennisScore {
         score.add(3,new Integer(0));
     }
 
+    // Increments the score in a tennis game based on which player won the point, i.e. player would be 1, or 2
     public String incrementScore(int player) {
-
-//        int playerGameScoreIndex = 1 + player;
-//        int playerSetScoreIndex = -1 + player;
-//        int gameScoreValue = score.elementAt(playerGameScoreIndex);
-//        gameScoreValue++;
-
         int player1SetScore = score.elementAt(0);
         int player2SetScore = score.elementAt(1);
         int player1GameScore = score.elementAt(2);
@@ -60,8 +51,8 @@ public class TennisScore {
                 player1GameScore = 0;
                 player2GameScore = 0;
             }
-
         }
+
         else if (player == 2) {
             player2GameScore++;
 
@@ -91,9 +82,10 @@ public class TennisScore {
         score.setElementAt(new Integer(player2GameScore),3);
 
         return printScore();
-//        return "0-0 15-0";
+
     }
 
+    // Returns a string representation of the tennis score
     public String printScore() {
         Integer player1SetScore = score.elementAt(0);
         Integer player2SetScore = score.elementAt(1);
@@ -112,6 +104,7 @@ public class TennisScore {
         return sb.toString();
     }
 
+    // Returns the game score as a String
     public String gameScoreToString(Integer gameScore) {
         int score = gameScore.intValue();
         String scoreString = "";
