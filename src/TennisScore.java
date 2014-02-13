@@ -27,66 +27,59 @@ public class TennisScore {
 
     // Increments the score in a tennis game based on which player won the point, i.e. player would be 1, or 2
     public String incrementScore(int player) {
-        int player1SetScore = score.elementAt(0);
-        int player2SetScore = score.elementAt(1);
-        int player1GameScore = score.elementAt(2);
-        int player2GameScore = score.elementAt(3);
+        int playerSetScore;
+        int playerGameScore;
+        int opponentSetScore;
+        int opponentGameScore;
 
         if (player == 1) {
-            player1GameScore++;
+            playerSetScore = score.elementAt(0);
+            opponentSetScore = score.elementAt(1);
+            playerGameScore = score.elementAt(2);
+            opponentGameScore = score.elementAt(3);
+        }
+        else {
+            playerSetScore = score.elementAt(1);
+            opponentSetScore = score.elementAt(0);
+            playerGameScore = score.elementAt(3);
+            opponentGameScore = score.elementAt(2);
+        }
 
-            // Game score reset if game is won
-            if (player1GameScore == 4) {
-                if (player2GameScore < 3) {
-                    player1GameScore = 0;
-                    player2GameScore = 0;
-                    player1SetScore++;
-                }
-
-                else if (player2GameScore == 4) {
-                    player2GameScore = 3;
-                    player1GameScore = 3;
-                }
+        playerGameScore++;
+        // Game score reset if game is won
+        if (playerGameScore == 4) {
+            if (opponentGameScore < 3) {
+                playerGameScore = 0;
+                opponentGameScore = 0;
+                playerSetScore++;
             }
 
-            if (player1GameScore == 5) {
-                player1SetScore++;
-                player1GameScore = 0;
-                player2GameScore = 0;
+            else if (opponentGameScore == 4) {
+                opponentGameScore = 3;
+                playerGameScore = 3;
             }
         }
 
-        else if (player == 2) {
-            player2GameScore++;
-
-            // Game score reset if game is won
-            if (player2GameScore == 4) {
-                if (player1GameScore < 3) {
-                    player2GameScore = 0;
-                    player1GameScore = 0;
-                    player2SetScore++;
-                }
-
-                else if (player1GameScore == 4) {
-                    player1GameScore = 3;
-                    player2GameScore = 3;
-                }
-            }
-
-            if (player2GameScore == 5) {
-                player2SetScore++;
-                player2GameScore = 0;
-                player1GameScore = 0;
-            }
+        if (playerGameScore == 5) {
+            playerSetScore++;
+            playerGameScore = 0;
+            opponentGameScore = 0;
         }
 
-        score.setElementAt(new Integer(player1SetScore),0);
-        score.setElementAt(new Integer(player2SetScore),1);
-        score.setElementAt(new Integer(player1GameScore),2);
-        score.setElementAt(new Integer(player2GameScore),3);
+        if (player == 1) {
+            score.setElementAt(new Integer(playerSetScore), 0);
+            score.setElementAt(new Integer(opponentSetScore), 1);
+            score.setElementAt(new Integer(playerGameScore), 2);
+            score.setElementAt(new Integer(opponentGameScore), 3);
+        }
+        else {
+            score.setElementAt(new Integer(playerSetScore), 1);
+            score.setElementAt(new Integer(opponentSetScore), 0);
+            score.setElementAt(new Integer(playerGameScore), 3);
+            score.setElementAt(new Integer(opponentGameScore), 2);
+        }
 
         return printScore();
-
     }
 
     // Returns a string representation of the tennis score
