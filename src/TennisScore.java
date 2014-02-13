@@ -6,6 +6,8 @@ import java.util.Vector;
 public class TennisScore {
 
     Vector<Integer> score;
+    public final int GAME_WIN_MARGIN = 2;
+    public final int MIN_NO_GAMES_TO_WIN_SET = 6;
 
     public TennisScore(int player1SetScore, int player2SetScore, int player1GameScore, int player2GameScore) {
         score = new Vector<Integer>(4);
@@ -43,6 +45,7 @@ public class TennisScore {
 
                 else if (player2GameScore == 4) {
                     player2GameScore = 3;
+                    player1GameScore = 3;
                 }
             }
 
@@ -66,6 +69,7 @@ public class TennisScore {
 
                 else if (player1GameScore == 4) {
                     player1GameScore = 3;
+                    player2GameScore = 3;
                 }
             }
 
@@ -100,6 +104,16 @@ public class TennisScore {
         sb.append(gameScoreToString(player1GameScore));
         sb.append("-");
         sb.append(gameScoreToString(player2GameScore));
+
+        // If a game has been won print a victory message
+        int gameDifference = Math.abs(player1SetScore - player2SetScore);
+        if ((gameDifference >= GAME_WIN_MARGIN)
+                && (player1SetScore >= MIN_NO_GAMES_TO_WIN_SET || player2SetScore >= MIN_NO_GAMES_TO_WIN_SET))
+        {
+            sb.append(System.getProperty("line.separator"));
+            String winner = (player1SetScore > player2SetScore) ? "Player 1" : "Player 2";
+            sb.append("Match has been won by " + winner);
+        }
 
         return sb.toString();
     }
